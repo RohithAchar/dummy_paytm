@@ -19,6 +19,7 @@ accountRoute.post("/transfer", authMiddleware, async (req, res) => {
   const { to, amount } = req.body;
 
   const toAccount = await Account.findOne({ userId: to }).session(session);
+
   if (!toAccount) {
     await session.abortTransaction();
     return res.status(400).json({
@@ -29,6 +30,7 @@ accountRoute.post("/transfer", authMiddleware, async (req, res) => {
   const fromAccount = await Account.findOne({
     userId: req.userId,
   }).session(session);
+
   if (fromAccount.balance < parseFloat(amount)) {
     await session.abortTransaction();
     return res.status(400).json({

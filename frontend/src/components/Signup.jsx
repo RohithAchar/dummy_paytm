@@ -18,8 +18,8 @@ const Signup = () => {
       password,
     });
     if (res.status == 200) {
-      navigate("/dashboard");
       localStorage.setItem("token", res.data.token);
+      navigate("/dashboard");
       return;
     } else alert(res.message);
   };
